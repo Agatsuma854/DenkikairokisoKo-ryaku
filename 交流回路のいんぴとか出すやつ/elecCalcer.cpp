@@ -117,7 +117,9 @@ int main(){
     double z[4] = {0.0};
     double y[4] = {0.0};
     double z2[4] = {0.0};
-    double y[24] = {0.0};
+    double y2[4] = {0.0};
+    double v[4] = {0.0};
+    double i[4] = {0.0};
     double memory[4] = {0.0};
 
     /*メインループ*/
@@ -151,7 +153,8 @@ int main(){
         }
         sceneChange(1);
 
-        //debug
+        ///////////////////////////////////////////////
+        // メイン画面
         cout << ": 現在値 :" << endl;
         if(selectMode == 1){
             showData(z,1,3);
@@ -160,6 +163,8 @@ int main(){
             showData(y,1,3);
             showData(y,2,3);
         }
+
+        cout << ":MODE SELECT: 1_Z-Y変換, 2_抵抗の加算, ";
 
         cout << "\n終了時は1を, 続行するなら2を入力 : ";
         cin >> endAbleFlg;
