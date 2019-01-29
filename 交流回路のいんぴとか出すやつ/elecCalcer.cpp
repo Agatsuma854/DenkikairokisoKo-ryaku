@@ -52,6 +52,7 @@ void inputData(double *array,int mode){
 /*mode変更サブルーチン*/
 bool selectHukusoOrKoku(){
     while(true){
+        int num1 = 0;
         cout << ": 複素数表示なら1を, 極座標表示なら2を入力 : \n select = ";
         cin >> num1;
         if(num1 == 1){
@@ -64,6 +65,7 @@ bool selectHukusoOrKoku(){
     }
 }
 
+/*入力された値を速攻で変換までこなす関数*/
 void xyImputController(double *x,double *y){
     if(selectHukusoOrKoku() == true){
         cout << ": 値入れて : " << endl;
@@ -112,7 +114,6 @@ void showData(double *array,int selectKH, int V_A_OHM_S){ /*K=1, H=2,| V=1, A=2,
 void sceneChange(){
     cout << "|===========================================================|" << endl;
 }
-
 void sceneChange(int num){
     switch(num){
         case 1:
@@ -126,6 +127,7 @@ void sceneChange(int num){
         break;
     }
 }
+
 /////////////////////////////////////////////
 // MAIN関数 
 int main(){
@@ -143,26 +145,28 @@ int main(){
 
     /*メインループ*/
     while(true){
+        /*初期値の指定画面*/
         sceneChange();
-        cout << ": 初期値設定 : インピーダンスは1を, アドミンタンスは2を入力 : \n select = ";
-        cin >> selectMode;
-        //cout << "----------" << endl;
-        switch(selectMode){
-            case 1:
+        while(true){
+            cout << ": 初期値設定 : インピーダンスは1を, アドミンタンスは2を入力 : \n select = ";
+            cin >> selectMode;
+            //cout << "----------" << endl;
+            if(selectMode==1){
                 xyImputController(z,y);
-            break;
-            case 2:
+                break;
+            }else if(selectMode==2){
                 xyImputController(y,z);
-            break;
-            default:
+                break;
+            }else{
                 cout << "無効な価です" << endl;
-            break;
+            }
         }
         sceneChange();
 
         ///////////////////////////////////////////////
         // メイン画面(暇になったら関数にしてループに突っ込む)
         while(true){
+            /*現在値の表示*/
             cout << ": 現在の抵抗値 :" << endl;
             showData(z,1,3);
             showData(z,2,3);
@@ -170,6 +174,7 @@ int main(){
             showData(y,1,4);
             showData(y,2,4);
             sceneChange();
+
             /*MODE選択画面*/
             cout << ":MODE SELECT: 1-抵抗の加算, 2-電圧の導出, 3-電流の導出, 4-初期設定に戻る, 0-終了" << endl;
             cout << " select = ";
@@ -183,84 +188,87 @@ int main(){
                 sceneChange(2);
                 sceneChange(2);
                 break;
-            }
-            switch(selectMode){
+            }if(selectMode==0){
                 /*終了処理*/
-                case 0:
-                    cout << "終了します" << endl;
-                    return 0;
-                break;
-
-                /*抵抗の加算*/
-                case 1:
+                cout << "終了します" << endl;
+                return 0;
+            }else if(selectMode == 1){
+                /*加算処理*/
+                while(true){
                     cout << ": インピーダンスは1を, アドミンタンスは2を入力 : \n select = ";
                     cin >> selectMode;
                     //cout << "----------" << endl;
                     if(selectMode == 1){
                         xyImputController(z2,y);
+                        break;
                     }else if(selectMode == 2){
                         xyImputController(y2,z);
+                        break;
                     }else{
-                        cout << "まともに価をいれろや" << endl;
+                        cout << "タイプミスデスカ?" << endl;
                     }
-                    z[0] += z2[0];
-                    z[1] += z2[1];
-                    convHukusoToKyoku(z);
-                    xyRecUpdata(z,y);
-                    sceneChange(1);
-                    cout << "! 加算後 ";
-                break;
-
+                }
+                z[0] += z2[0];
+                z[1] += z2[1];
+                convHukusoToKyoku(z);
+                xyRecUpdata(z,y);
+                sceneChange(1);
+                cout << "! 加算後 ";
+            }else if(selectMode == 2){
                 /*電圧の導出*/
-                case 2:
+                while(true){
                     cout << ": 電流のパラメータ : 複素表示は1を, フェーザ表示は2を入力 : \n select = ";
                     cin >> selectMode;
-                    //cout << "----------" << endl;
+                    //cout << "----------" << endl;{
                     if(selectMode == 1){
                         inputData(i,1);
                         convHukusoToKyoku(i);
+                        break;
                     }else if(selectMode == 2){
                         inputData(i,2);
                         convKyokuToHukuso(i);
+                        break;
                     }else{
                         cout << "まともに価をいれろや" << endl;
                     }
-                    multiValu(z,i,ans);
-                    cout << "#############" << endl;
-                    cout << ": 求めた電圧 :" << endl;
-                    showData(ans,1,1);
-                    showData(ans,2,1);
-                    cout << "#############" << endl;
-                break;
-
+                }
+                multiValu(z,i,ans);
+                cout << "#############" << endl;
+                cout << ": 求めた電圧 :" << endl;
+                showData(ans,1,1);
+                showData(ans,2,1);
+                cout << "#############" << endl;
+            }else if(selectMode == 3){
                 /*電流の導出*/
-                case 3:
+                while(true){
                     cout << ": 電圧のパラメータ : 複素表示は1を, フェーザ表示は2を入力 : \n select = ";
                     cin >> selectMode;
                     //cout << "----------" << endl;
                     if(selectMode == 1){
                         inputData(v,1);
                         convHukusoToKyoku(v);
+                        break;
                     }else if(selectMode == 2){
                         inputData(v,2);
                         convKyokuToHukuso(v);
+                        break;
                     }else{
                         cout << "まともに価をいれろや" << endl;
                     }
-                    multiValu(y,v,ans);
-                    cout << "#############" << endl;
-                    cout << ": 求めた電流 :" << endl;
-                    showData(ans,1,2);
-                    showData(ans,2,2);
-                    cout << "#############" << endl;
-                break;
-                default:
-                    cout << "!!画面を更新します!!" << endl;
-                    sceneChange(2);
-                    sceneChange(2);
-                    sceneChange(2);
-                    sceneChange(2);
-                break;
+                }
+                multiValu(y,v,ans);
+                cout << "#############" << endl;
+                cout << ": 求めた電流 :" << endl;
+                showData(ans,1,2);
+                showData(ans,2,2);
+                cout << "#############" << endl;
+            }else{
+                cout << "!!画面を更新します!!" << endl;
+                sceneChange(2);
+                sceneChange(2);
+                sceneChange(2);
+                sceneChange(2);
+                sceneChange(1);
             }
         }
     }
