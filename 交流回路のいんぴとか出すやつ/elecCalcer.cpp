@@ -52,6 +52,7 @@ void inputData(double *array,int mode){
 /*mode変更サブルーチン*/
 bool selectHukusoOrKoku(){
     while(true){
+        int num1 = 0;
         cout << ": 複素数表示なら1を, 極座標表示なら2を入力 : \n select = ";
         cin >> num1;
         if(num1 == 1){
