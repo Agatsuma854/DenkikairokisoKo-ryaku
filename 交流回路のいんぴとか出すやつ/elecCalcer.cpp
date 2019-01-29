@@ -51,8 +51,7 @@ void inputData(double *array,int mode){
 }
 /*mode変更サブルーチン*/
 bool selectHukusoOrKoku(){
-    int num1=0;
-    while(!(num1==1&&num1==2)){
+    while(true){
         cout << ": 複素数表示なら1を, 極座標表示なら2を入力 : \n select = ";
         cin >> num1;
         if(num1 == 1){
@@ -60,7 +59,7 @@ bool selectHukusoOrKoku(){
         }else if(num1 == 2){
             return false; // 極表示なら false
         }else{
-            cout << "無効な価です!!" << endl;
+            cout << "無効な価です!!もう一度入力してね" << endl;
         }
     }
 }
