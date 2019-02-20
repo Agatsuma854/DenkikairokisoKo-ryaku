@@ -1,6 +1,6 @@
 #include <iostream>
 
 int main(){
-	std::cout << ""Hello, World !" << std::cin
+	std::cout << ""Konhitiha!"" << std::cin
 return 0;
 }
