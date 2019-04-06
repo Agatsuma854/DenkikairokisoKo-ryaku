@@ -1,2 +1,2 @@
-# JunkBox
-くだらねぇプログラム置き場
+# DenkikairokisoKo-ryaku
+プログラムにさせればいいのでは？
